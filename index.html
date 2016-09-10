@@ -2,497 +2,71 @@
 <html>
 	<head>
 		<meta charset='utf-8' />
-		<title>Strasbourg - Built-up land</title>
-		<link rel="stylesheet" href="http://openlayers.org/en/v3.18.2/css/ol.css" type="text/css">
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
-		<link href="https://fonts.googleapis.com/css?family=Assistant|Roboto+Slab" rel="stylesheet"> 
-		<script src="http://openlayers.org/en/v3.18.2/build/ol.js" type="text/javascript"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<style type = "text/css">
-			* {
-			  text-rendering: optimizeLegibility;
-			  -webkit-font-smoothing: antialiased;
-			  -moz-osx-font-smoothing: grayscale;
-			}
-			body { 
-				margin:0; 
-				padding:0;
-				background-color:white;
-				font-family: 'Assistant', sans-serif;
-				letter-spacing: 1px;
-			}
-			.top-pad{
-				position: absolute;
-				top: 0;
-				width: 100%;
-				height:15%;
-				margin: 0;
-				padding: 0;
-				background-color: #1E1E20;
-				z-index: 99;
-				display: flex;
-				color: white;
-				border-bottom: 3px solid #374140;
-			}
-			h1 {
-				padding-left: 21px;
-				font-size: 1.5em;
-				font-family: 'Roboto Slab', serif;
-				line-height: 2.5em;
-				font-weight: 100;
-				letter-spacing: 2px;
-			}
-			#map {
-				position:absolute;  
-				width:100%;
-				height: 85%; 
-				top:15%; 
-				bottom:0;
-			}
-			.ol-control {background-color: transparent !important; z-index: 150;}
-			.ol-zoom {
-				left: unset;
-				right: 9px;
-				top: 10px !important;
-				width: 35px !important;
-			}
-			.ol-zoom-in, .ol-zoom-out {
-				box-shadow: 0 0 0 3px #374140 inset;
-				width: 100% !important;
-				height: 35px !important;
-				border-radius: 0px !important;
-			}
-
-			.ol-zoom-in:focus, .ol-zoom-out:focus {
-				background-color: #1E1E20 !important;
-				transition: 0.3s;
-			}
-			.ol-zoom-in:hover, .ol-zoom-out:hover {
-				background-color: #DC3522 !important;
-				box-shadow: 0 0 0 3px #374140 inset !important;
-				transition: 0.3s;
-			}
-			.ol-control button {
-				background-color: #1E1E20;
-			}
-			.ol-zoom-in {margin-bottom: 5px !important;}
-			#layer-switch {
-				position: absolute; 
-				z-index: 999;
-				top: 13px; 
-				left: 10px;
-				width: 150px;
-				text-align: left;
-				padding: 0px;
-				background-color: #1E1E20;
-				border: 3px solid #374140;
-			}
-			#layer-switch p {
-				color: white;
-				padding-left: 10px;
-			}
-			hr {
-				 border: 0; border-bottom: 1px dashed #374140; background: #1E1E20;
-			}
-			.checkbox{
-				margin: 5px;
-				padding: 5px 0px 5px 5px;
-				font-size: 0.8em;
-				vertical-align: middle;
-				color: white;
-			}
-			input[type=checkbox] {
-			    display:none;
-			}
-			input[type=checkbox] + label:before {
-			    content: "";  
-			    display: inline-block;
-			    width: 20px;  
-			    height: 20px;  
-			    vertical-align:middle;
-			    margin-right: 15px;  
-			    background-color: #1E1E20;
-			    border: 2px solid white;
-			    border-radius: 100%;
-			}
-			
-			input[type=checkbox]:checked + label:before {
-			    color:white;
-			    text-align:center;
-			    line-height:15px;
-			}
-			label {font-size: 1.1em}
-			#oR11bR_1992:checked + label:before, #f1992 {
-				background-color: rgb(255,255,204);
-			}
-			#oR11bR_1996:checked + label:before, #f1996 {
-				background-color: rgb(255,237,160);
-			}
-			#oR11bR_1998:checked + label:before, #f1998 {
-				background-color: rgb(254,217,118);
-			}
-			#oR11bR_1999:checked + label:before, #f1999 {
-				background-color: rgb(254,178,76);
-			}
-			#oR11bR_2000:checked + label:before, #f2000 {
-				background-color: rgb(253,141,60);
-			}
-			#oR11bR_2001:checked + label:before, #f2001 {
-				background-color: rgb(252,78,42);
-			}
-			#oR11bR_2004:checked + label:before, #f2004 {
-				background-color: rgb(227,26,28);
-			}
-			#oR11bR_2010:checked + label:before, #f2010 {
-				background-color: rgb(189,0,38);
-			}
-			#oR11bR_2011:checked + label:before, #f2011 {
-				background-color: rgb(128,0,38);
-			}
-			.ol-scale-line{background:rgba(0,0,0,0);}
-			#information {
-				text-align: center;
-				position: absolute;
-				z-index: 100;
-				right: 10px;
-				top: 93px;
-				height: 35px;
-				width: 35px;
-				background-color: #1E1E20;
-				box-shadow: 0 0 0 3px #374140 inset;
-			}
-			#information i {
-				margin-top: 25%;
-				color: white;
-			}
-
-			#information:hover {
-				background-color: #DC3522;
-				box-shadow: 0 0 0 3px #374140 inset;
-				transition: 0.3s;
-			}
-
-			#tooltip {
-				display:none;
-				position: absolute;
-				z-index: 101;
-				right: 50px;
-				top: 93px;
-				background-color: #1E1E20;
-				box-shadow: 0 0 0 3px #374140 inset;
-				padding: 0px 10px 0px 10px;
-				color: white;
-				text-align: justify;
-				font-size: 0.8em;
-				width: 250px;
-			}
-
-			table {
-				margin:auto;
-				text-align: center;
-				border: collapse;
-			}
-
-			th {
-				text-shadow: 0px 1px #1E1E20;
-			}
-
-			td, th {
-				padding: 2px;
-			}
-			.ol-attribution {right: 10px !important; bottom: 10px !important;}
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>Extension urbaine - Strasbourg</title>
+		<style type="text/css">
+			body { background:#404040; color:#f8f8f8; font:500 20px/26px 'Helvetica Neue', Helvetica, Arial, Sans-serif; margin:0; padding:0; -webkit-font-smoothing:antialiased; text-align: justify;}
+			.sidebar { width:25%; }
+			.map { border-left:1px solid #fff; position:absolute; left:25%; width:75%; top:0; bottom:0; }
+			.pad2 { padding:20px; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; }
+			p {font-size: 14px; margin: 0;}
+			h1 {font-size: 20px; border-bottom: 1px solid white;}
+			h2 {font-size: 16px;}
 		</style>
+		<script type"text/javascript" src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+		<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
 	</head>
 	<body>
-
-		<div class="top-pad">
-			<h1>The expansion of built-up land in Strasbourg, from 1992 to 2011</h1>
+		<div class='sidebar pad2'>
+			<h1>Statistiques</h1>
+			<br />
+			<p>La meilleure classification parmi les 48 initiales, pour la scène du 06/27/2011, correspond à 'oR11bR'. L'ensemble des traitements relatifs à ce code ont été appliqués aux autres scènes de la série.</p>
+			<br />
+			<h2>Valeurs F :</h2>
+			<p>1992 : <i>0,9579</i></p>
+			<p>1996 : <i>0,9641</i></p>
+			<p>1998 : <i>0,9593</i></p>
+			<p>1999 : <i>0,9622</i></p>
+			<p>2000 : <i>0,9656</i></p>
+			<p>2001 : <i>0,9666</i></p>
+			<p>2004 : <i>0,9613</i></p>
+			<p>2010 : <i>0,9712</i></p>
+			<p>2011 : <i>0,9644</i></p>
 		</div>
+		<div id='map' class='map pad2'></div>
+		<script charset="utf-8" type="text/javascript">
+			// Set map and style
+			L.mapbox.accessToken = 'pk.eyJ1Ijoid29vdGFuNjciLCJhIjoiY2lxeG1id2J4MDA0amh0bmo2b3ZrM284cyJ9.dZofdSG7bDjCRNKQQrYrPg';
+			var map = L.mapbox.map('map')
+				.setView([48.5735129521, 7.74114365799], 11);
+			L.mapbox.styleLayer('mapbox://styles/mapbox/satellite-v9').addTo(map);
+			
+			var oR11bR_1992 = L.mapbox.featureLayer();				
+			var oR11bR_1996 = L.mapbox.featureLayer();
+			var oR11bR_1998 = L.mapbox.featureLayer();
+			var oR11bR_1999 = L.mapbox.featureLayer();
+			var oR11bR_2000 = L.mapbox.featureLayer();
+			var oR11bR_2001 = L.mapbox.featureLayer();
+			var oR11bR_2004 = L.mapbox.featureLayer();
+			var oR11bR_2010 = L.mapbox.featureLayer();
+			var oR11bR_2011 = L.mapbox.featureLayer();
 
-		<div id="map">
-			<div id="information"><i class="fa fa-info" aria-hidden="true"></i></div>
-			<div id="tooltip">
-				<p>These classification maps were produced using SPOT Imagery and Copernicus data (HRL Imperviousness, 2012).</p>
-				<hr>
-				<p>F-values :</p>
-				<table>
-					<tr>
-						<th id="f1992">1992</th>
-						<th id="f1996">1996</th>
-						<th id="f1998">1998</th>
-						<th id="f1999">1999</th>
-						<th id="f2000">2000</th>
-					</tr>
-					<tr>
-						<td>0,9579</td>
-						<td>0,9641</td>
-						<td>0,9593</td>
-						<td>0,9622</td>
-						<td>0,9656</td>
-					</tr>
-					<tr><td><br></td></tr>
-					<tr>
-						<th id="f2001">2001</th>
-						<th id="f2004">2004</th>
-						<th id="f2010">2010</th>
-						<th id="f2011">2011</th>
-					</tr>
-					<tr>
-						<td>0,9666</td>
-						<td>0,9613</td>
-						<td>0,9712</td>
-						<td>0,9644</td>
-					</tr>
-				</table>
-				<br>
-			</div>
-			<div id="layer-switch">
-				<p>Select layer(s)</p>
-				<hr>
-				<div class="checkbox-wrap">
-					<div class="checkbox">
-						<input class="layer-checkbox" id="oR11bR_1992" type="checkbox" name="geojson-layer">
-						<label for="oR11bR_1992">1992</label>
-					</div>
-					<div class="checkbox">
-						<input class="layer-checkbox" id="oR11bR_1996" type="checkbox" name="geojson-layer">
-						<label for="oR11bR_1996">1996</label>
-					</div>
-					<div class="checkbox">
-						<input class="layer-checkbox" id="oR11bR_1998" type="checkbox" name="geojson-layer">
-						<label for="oR11bR_1998">1998</label>
-					</div>
-					<div class="checkbox">
-						<input class="layer-checkbox" id="oR11bR_1999" type="checkbox" name="geojson-layer">
-						<label for="oR11bR_1999">1999</label>
-					</div>
-					<div class="checkbox">
-						<input class="layer-checkbox" id="oR11bR_2000" type="checkbox" name="geojson-layer">
-						<label for="oR11bR_2000">2000</label>
-					</div>
-					<div class="checkbox">
-						<input class="layer-checkbox" id="oR11bR_2001" type="checkbox" name="geojson-layer">
-						<label for="oR11bR_2001">2001</label>
-					</div>
-					<div class="checkbox">
-						<input class="layer-checkbox" id="oR11bR_2004" type="checkbox" name="geojson-layer">
-						<label for="oR11bR_2004">2004</label>
-					</div>
-					<div class="checkbox">
-						<input class="layer-checkbox" id="oR11bR_2010" type="checkbox" name="geojson-layer">
-						<label for="oR11bR_2010">2010</label>
-					</div>
-					<div class="checkbox">
-						<input class="layer-checkbox" id="oR11bR_2011" type="checkbox" name="geojson-layer">
-						<label for="oR11bR_2011">2011</label>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<script type="text/javascript">
+			L.control.layers({
+				},{
+				'Année 1992': oR11bR_1992.loadURL('database/oR11bR_1992.geojson'),
+				'Année 1996': oR11bR_1996.loadURL('database/oR11bR_1996.geojson'),
+				'Année 1998': oR11bR_1998.loadURL('database/oR11bR_1998.geojson'),
+				'Année 1999': oR11bR_1999.loadURL('database/oR11bR_1999.geojson'),
+				'Année 2000': oR11bR_2000.loadURL('database/oR11bR_2000.geojson'),
+				'Année 2001': oR11bR_2001.loadURL('database/oR11bR_2001.geojson'),
+				'Année 2004': oR11bR_2004.loadURL('database/oR11bR_2004.geojson'),
+				'Année 2010': oR11bR_2010.loadURL('database/oR11bR_2010.geojson'),
+			    'Année 2011': oR11bR_2011.loadURL('database/oR11bR_2011.geojson')
+			    },{
+			    	collapsed: false
+			    }).addTo(map);
 
-			var map = new ol.Map({
-				target: 'map',
-				layers: [
-					new ol.layer.Tile({
-						source: new ol.source.XYZ({
-							url: 'https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}?access_token=pk.	eyJ1Ijoid29vdGFuNjciLCJhIjoiY2lxeG1id2J4MDA0amh0bmo2b3ZrM284cyJ9.dZofdSG7bDjCRNKQQrYrPg'
-						})
-					})
-				],
-				view: new ol.View({
-					center: ol.proj.fromLonLat([7.74114365799,48.5735129521]),
-					zoom: 10.9
-				}),
-				controls: ol.control.defaults().extend([
-					new ol.control.ScaleLine()
-				])
-			});
-
-			var oR11bR_1992 = new ol.layer.Vector({
-				source: new ol.source.Vector({
-					url: 'database/oR11bR_1992.geojson',
-					format: new ol.format.GeoJSON({
-						defaultDataProjection :'EPSG:4326', 
-						projection: 'EPSG:3857'
-					})
-				}),
-				title: 'oR11bR_1992',
-				style: new ol.style.Style({
-					fill: new ol.style.Fill({
-						color: 'rgba(255,255,204,0.75)'
-					})
-				})
-			});
-	
-			var oR11bR_1996 = new ol.layer.Vector({
-				source: new ol.source.Vector({
-					url: 'database/oR11bR_1996.geojson',
-					format: new ol.format.GeoJSON({
-						defaultDataProjection :'EPSG:4326', 
-						projection: 'EPSG:3857'
-					})
-				}),
-				title: 'oR11bR_1996',
-				style: new ol.style.Style({
-					fill: new ol.style.Fill({
-						color: 'rgba(255,237,160,0.75)'
-					})
-				})
-			});
-	
-			var oR11bR_1998 = new ol.layer.Vector({
-				source: new ol.source.Vector({
-					url: 'database/oR11bR_1998.geojson',
-					format: new ol.format.GeoJSON({
-						defaultDataProjection :'EPSG:4326', 
-						projection: 'EPSG:3857'
-					})
-				}),
-				title: 'oR11bR_1998',
-				style: new ol.style.Style({
-					fill: new ol.style.Fill({
-						color: 'rgba(254,217,118,0.75)'
-					})
-				})
-			});
-	
-			var oR11bR_1999 = new ol.layer.Vector({
-				source: new ol.source.Vector({
-					url: 'database/oR11bR_1999.geojson',
-					format: new ol.format.GeoJSON({
-						defaultDataProjection :'EPSG:4326', 
-						projection: 'EPSG:3857'
-					})
-				}),
-				title: 'oR11bR_1999',
-				style: new ol.style.Style({
-					fill: new ol.style.Fill({
-						color: 'rgba(254,178,76,0.75)'
-					})
-				})
-			});
-	
-			var oR11bR_2000 = new ol.layer.Vector({
-				source: new ol.source.Vector({
-					url: 'database/oR11bR_2000.geojson',
-					format: new ol.format.GeoJSON({
-						defaultDataProjection :'EPSG:4326', 
-						projection: 'EPSG:3857'
-					})
-				}),
-				title: 'oR11bR_2000',
-				style: new ol.style.Style({
-					fill: new ol.style.Fill({
-						color: 'rgba(253,141,60,0.75)'
-					})
-				})
-			});
-	
-			var oR11bR_2001 = new ol.layer.Vector({
-				source: new ol.source.Vector({
-					url: 'database/oR11bR_2001.geojson',
-					format: new ol.format.GeoJSON({
-						defaultDataProjection :'EPSG:4326', 
-						projection: 'EPSG:3857'
-					})
-				}),
-				title: 'oR11bR_2001',
-				style: new ol.style.Style({
-					fill: new ol.style.Fill({
-						color: 'rgba(252,78,42,0.75)'
-					})
-				})
-			});
-	
-			var oR11bR_2004 = new ol.layer.Vector({
-				source: new ol.source.Vector({
-					url: 'database/oR11bR_2004.geojson',
-					format: new ol.format.GeoJSON({
-						defaultDataProjection :'EPSG:4326', 
-						projection: 'EPSG:3857'
-					})
-				}),
-				title: 'oR11bR_2004',
-				style: new ol.style.Style({
-					fill: new ol.style.Fill({
-						color: 'rgba(227,26,28,0.75)'
-					})
-				})
-			});
-	
-			var oR11bR_2010 = new ol.layer.Vector({
-				source: new ol.source.Vector({
-					url: 'database/oR11bR_2010.geojson',
-					format: new ol.format.GeoJSON({
-						defaultDataProjection :'EPSG:4326', 
-						projection: 'EPSG:3857'
-					})
-				}),
-				title: 'oR11bR_2010',
-				style: new ol.style.Style({
-					fill: new ol.style.Fill({
-						color: 'rgba(189,0,38,0.75)'
-					})
-				})
-			});
-	
-			var oR11bR_2011 = new ol.layer.Vector({
-				source: new ol.source.Vector({
-					url: 'database/oR11bR_2011.geojson',
-					format: new ol.format.GeoJSON({
-						defaultDataProjection :'EPSG:4326', 
-						projection: 'EPSG:3857'
-					})
-				}),
-				name: 'oR11bR_2011',
-				style: new ol.style.Style({
-					fill: new ol.style.Fill({
-						color: 'rgba(128,0,38,0.75)'
-					})
-				})
-			});
-	
-			oR11bR_1992.setZIndex(10);
-			oR11bR_1996.setZIndex(9);
-			oR11bR_1998.setZIndex(8);
-			oR11bR_1999.setZIndex(7);
-			oR11bR_2000.setZIndex(6);
-			oR11bR_2001.setZIndex(5);
-			oR11bR_2004.setZIndex(4);
-			oR11bR_2010.setZIndex(3);
-			oR11bR_2011.setZIndex(2);
-	
-			// jQuery script
-	
-			$("#oR11bR_1992").ready(function(){
-				$(".layer-checkbox").prop("checked",false);
-				$("#oR11bR_1992").prop("checked",true);
-				map.addLayer(oR11bR_1992);
-			});
-	
-			$(".layer-checkbox").on('change', function() {
-				var layerId = $(this).attr('id');
-				if ($(this).is(':checked')) {
-					map.addLayer(eval(layerId));
-				} else {
-					map.removeLayer(eval(layerId));
-				}
-			});
-
-			$('#information').click(function(){
-  				$('#tooltip').toggle();
-			});
-
-			$("#information").on({
-			    mouseenter: function () {
-			        $('#tooltip').toggle();
-			    },
-			    mouseleave: function () {
-			        $('#tooltip').hide();
-			    }
-			});
+			oR11bR_2011.addTo(map);
 		</script>
 	</body>
 </html>
