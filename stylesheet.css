@@ -33,7 +33,7 @@ h1 {
 	height: 100%; 
 	top:0; 
 }
-.ol-control {background-color: transparent; !important; padding: 0px !important;}
+.ol-control {background-color: transparent !important; padding: 0px !important;}
 .ol-zoom {
 	position: fixed !important;
 	display: flex !important;
