@@ -13,7 +13,7 @@ body {
 .top-pad{
 	position: absolute;
 	width: 100%;
-	height:96px;
+	height:15%;
 	z-index: 99;
 	background-color: #1E1E20;
 	border-bottom: 3px solid #374140;
@@ -22,24 +22,22 @@ h1 {
 	padding-left: 21px;
 	font-size: 1.5em;
 	font-family: 'Roboto Slab', serif;
-	line-height: 55px;
+	line-height: 2.5em;
 	font-weight: 100;
 	letter-spacing: 2px;
-	vertical-align: middle;
 }
 #map {
 	position:absolute;  
 	width:100%;
-	height: 100%; 
-	top:0; 
+	height: 85%; 
+	top:15%; 
 }
-.ol-control {background-color: transparent; !important; padding: 0px !important;}
+.ol-control {background-color: transparent !important;}
 .ol-zoom {
-	position: fixed !important;
 	display: flex !important;
 	left: unset;
-	right: 54px;
-	top: 108px !important;
+	right: 52px;
+	top: 10px !important;
 }
 .ol-zoom-in, .ol-zoom-out {
 	box-shadow: 0 0 0 3px #374140 inset;
@@ -55,12 +53,14 @@ h1 {
 	background-color: #DC3522 !important;
 	transition: 0.3s;
 }
-.ol-control button {background-color: #1E1E20;}
+.ol-control button {
+	background-color: #1E1E20;
+}
 .ol-zoom-in {margin-right: 9px !important;}
 #layer-switch {
-	position: fixed; 
+	position: absolute; 
 	z-index: 999;
-	top: 109px; 
+	top: 13px; 
 	left: 10px;
 	width: 150px;
 	text-align: left;
@@ -78,7 +78,9 @@ hr {
 	padding: 5px 0px 5px 5px;
 	font-size: 0.8em;
 }
-input[type=checkbox] {display:none;}
+input[type=checkbox] {
+    display:none;
+}
 input[type=checkbox] + label:before {
     content: "";  
     display: inline-block;
@@ -126,26 +128,28 @@ label {font-size: 1.1em}
 #information {
 	cursor: default;
 	text-align: center;
-	position: fixed;
+	position: absolute;
 	z-index: 100;
 	right: 10px;
-	top: 109px;
+	top: 13px;
 	height: 35px;
 	width: 35px;
 	background-color: #1E1E20;
 	box-shadow: 0 0 0 3px #374140 inset;
 }
-#information i {margin-top: 25%;}
+#information i {
+	margin-top: 25%;
+}
 #information:hover {
 	background-color: #DC3522 !important;
 	transition: 0.3s;
 }
 #tooltip {
 	display:none;
-	position: fixed;
+	position: absolute;
 	z-index: 101;
 	right: 10px;
-	top: 154px;
+	top: 58px;
 	background-color: #1E1E20;
 	box-shadow: 0 0 0 3px #374140 inset;
 	padding: 0px 10px 0px 10px;
@@ -158,6 +162,10 @@ table {
 	text-align: center;
 	border: collapse;
 }
-th {text-shadow: 0px 1px 1px #1E1E20;}
-td, th {padding: 2px;}
+th {
+	text-shadow: 0px 1px 1px #1E1E20;
+}
+td, th {
+	padding: 2px;
+}
 .ol-attribution {right: 10px !important; bottom: 10px !important;}
